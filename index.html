@@ -31,16 +31,13 @@
         window.intlTelInput(input, {
             initialCountry: "auto",
             geoIpLookup: function (callback) {
-                locationObject = $.get('https://ipinfo.io/?token=bb63841ced5798', function () { }, "jsonp").always(function (resp) {
+                $.get('https://ipinfo.io/?token=bb63841ced5798', function () { }, "jsonp").always(function (resp) {
                     var countryCode = (resp && resp.country) ? resp.country : "us";
                     callback(countryCode);
                 });
             },
         });
-        locationObject.then((data)=> {
-            document.getElementById('city').innerText =   data.city     
-        document.getElementById('state').innerText =   data.region
-            })
+
              
     </script>
 </body>
