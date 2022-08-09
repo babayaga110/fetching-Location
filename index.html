@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.18/css/intlTelInput.css"
+        integrity="sha512-gxWow8Mo6q6pLa1XH/CcH8JyiSDEtiwJV78E+D+QP0EVasFs8wKXq16G8CLD4CJ2SnonHr4Lm/yY2fSI2+cbmw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <input type="tel" id="phone">
+    <p id="city"></p>
+    <p id="state"></p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.18/js/intlTelInput-jquery.js"
+        integrity="sha512-OQ4jHPKEPwkASoFbbeWOpNBRSvbwxD5/zSVFWKrRs7BtMve5XbKRWcf2E1Lpfbp9QBnIyVC9DQGwuHczqSokaQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.18/js/utils.js"
+        integrity="sha512-6sKpcusiQQ/vOBWU0ouNesdklDzgwywnf+255TCMAs+n68jnDqaDC3gt01ofYWry4mRdCHR+8uox88HT3YBOdQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.18/js/intlTelInput.js"
+        integrity="sha512-4idcnxQMwKBFEPOLqkv/yVJ+QW4I6nkuXGeAWqZtmBxjF2Yp63fS51XO2lLtonqaWYMdq72tMuvsxQ8x4gXCoA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const input = document.querySelector("#phone");
+        let locationObject ;
+        window.intlTelInput(input, {
+            initialCountry: "auto",
+            geoIpLookup: function (callback) {
+                locationObject = $.get('https://ipinfo.io/?token=bb63841ced5798', function () { }, "jsonp").always(function (resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "us";
+                    callback(countryCode);
+                });
+            },
+        });
+        locationObject.then((data)=> {
+            document.getElementById('city').innerText =   data.city     
+        document.getElementById('state').innerText =   data.region
+            })
+             
+    </script>
+</body>
+
+</html>
